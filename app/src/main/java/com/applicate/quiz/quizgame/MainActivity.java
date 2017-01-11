@@ -1,6 +1,7 @@
 package com.applicate.quiz.quizgame;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -65,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
                 loginUser(view);
             }
         });
-
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -107,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d("Log In", "signInWithEmail:onComplete" + task.isSuccessful());
-
                 //If sign in fails, display a message to the user.
                 //If sign in succeeds the auth state listener will be notified and
                 //logic to handle the signed in user can be handled in the listener
