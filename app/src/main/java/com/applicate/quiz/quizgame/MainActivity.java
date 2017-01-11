@@ -3,6 +3,7 @@ package com.applicate.quiz.quizgame;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUser();
+                loginUser(view);
             }
         });
 
@@ -82,18 +83,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //method to login the user - método para logear al usuario
-    private void loginUser(){
+    private void loginUser(View view){
         String mail = etMail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(mail)){
             //the mail is empty
-            Toast.makeText(this, "Please, insert a valid mail", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Please, insert a valid mail", Toast.LENGTH_LONG).show();
+            Snackbar.make(view,"Please, insert a valid mail",Snackbar.LENGTH_LONG).show();
             return;
         }
         if (TextUtils.isEmpty(password)){
             //the password is empty
-            Toast.makeText(this,"Please, insert a password", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,"Please, insert a password", Toast.LENGTH_LONG).show();
+            Snackbar.make(view,"Please, insert a password",Snackbar.LENGTH_LONG).show();
             return;
         }
 
@@ -113,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     pDLogin.cancel();
                     Log.w("Log In", "signInWithEmail:failed", task.getException());
                     Toast.makeText(MainActivity.this, "Usuario o Password in correcto", Toast.LENGTH_LONG).show();
+                    //TODO: Intentar hacerlo con SnackBar
                 }
             }
         });
