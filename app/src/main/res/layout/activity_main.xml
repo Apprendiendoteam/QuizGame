@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -8,10 +8,53 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="@color/colorTextBlue"
     tools:context="com.applicate.quiz.quizgame.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+        android:textColor="@color/colorTextGrey"
+        android:textSize="20dp"
+        android:hint="username@mail.com"
+        android:textColorHint="@color/colorTextGrey"
+        android:background="@color/colorTextWhite"
+        android:layout_margin="10px"
+        android:padding="15px"
+        android:inputType="textEmailAddress"
+        android:id="@+id/etMail"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextGrey"
+        android:background="@color/colorTextWhite"
+        android:textSize="20dp"
+        android:hint="*******"
+        android:textColorHint="@color/colorTextGrey"
+        android:layout_margin="10px"
+        android:padding="15px"
+        android:id="@+id/etPassword"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log In"
+        android:textSize="20dp"
+        android:textColor="@color/colorTextWhite"
+        android:background="@color/colorTextOrange"
+        android:id="@+id/btLogin"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Regístrate ahora"
+        android:textColor="@color/colorTextWhite"
+        android:textSize="15dp"
+        android:textAlignment="viewEnd"
+        android:layout_margin="10px"
+        android:id="@+id/tvRegister"/>
+
+</LinearLayout>
