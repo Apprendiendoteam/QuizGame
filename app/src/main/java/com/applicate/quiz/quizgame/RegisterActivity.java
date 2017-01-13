@@ -16,12 +16,27 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class RegisterActivity extends AppCompatActivity {
 
+    @Bind(R.id.etMail) EditText etMail;
+    @Bind(R.id.etPassword) EditText etPassword;
+    @Bind(R.id.etPasscheck) EditText etPassCheck;
+    @Bind(R.id.btRegister) Button btRegister;
+    @Bind(R.id.btCancel) Button btCancel;
+
+    /*
     private EditText etMail;
     private EditText etPassword;
+    private EditText etPassCheck;
     private Button btRegister;
     private Button btCancel;
+    */
+
+    //private static final String TAG = "RegisterActivity";
+    private static final int REQUEST_SIGNUP = 0;
 
     private ProgressDialog progressDialog;
 
@@ -32,15 +47,22 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        //Para la inyección de las vistas con ButterKnife
+        ButterKnife.bind(this);
+
+        /*
         etMail = (EditText) findViewById(R.id.etMail);
         etPassword = (EditText) findViewById(R.id.etPassword);
+        etPassCheck = (EditText) findViewById(R.id.etPasscheck);
         btRegister = (Button) findViewById(R.id.btRegister);
         btCancel = (Button) findViewById(R.id.btCancel);
+        */
 
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //listener del Cancel Button para volver a la vista de Login
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        //listener del Register Button para ejecutar la función de registro
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,9 +80,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+
     private void registerUser(){
         String mail = etMail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
+        String passCheck = etPassCheck.getText().toString().trim();
 
         if(TextUtils.isEmpty(mail)){
             //mail is empty
@@ -70,6 +95,11 @@ public class RegisterActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(password)){
             //password is empty
             Toast.makeText(this, "Please insert a valid password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!password.equals(passCheck)){
+            Toast.makeText(this, "Password should be the same", Toast.LENGTH_SHORT).show();
             return;
         }
 
