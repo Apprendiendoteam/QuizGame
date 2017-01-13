@@ -37,6 +37,10 @@ public class RegisterActivity extends AppCompatActivity {
         btRegister = (Button) findViewById(R.id.btRegister);
         btCancel = (Button) findViewById(R.id.btCancel);
 
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
         //TODO: sin saber si esa opción la tiene firebase
         //TODO: Se me ocurre que podría hacerse con un if
         //TODO: Si  el texto q hay en el campo 1 de contraseña == al texto del campo 2
-        
+
 
     }
 }

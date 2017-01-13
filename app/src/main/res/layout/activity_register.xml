@@ -38,6 +38,19 @@
         android:id="@+id/etPassword"
         android:inputType="textPassword"/>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextGrey"
+        android:background="@color/colorTextWhite"
+        android:textSize="20dp"
+        android:hint="Repeat the password"
+        android:textColorHint="@color/colorTextGrey"
+        android:layout_margin="10px"
+        android:padding="15px"
+        android:id="@+id/etPasscheck"
+        android:inputType="textPassword"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +64,8 @@
             android:textColor="@color/colorTextWhite"
             android:background="@color/colorTextOrange"
             android:id="@+id/btRegister"
-            android:layout_margin="20px"/>
+            android:layout_margin="20px"
+            android:padding="15px"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -61,7 +75,8 @@
             android:textColor="@color/colorTextWhite"
             android:background="@color/colorTextOrange"
             android:id="@+id/btCancel"
-            android:layout_margin="20px"/>
+            android:layout_margin="20px"
+            android:padding="15px"/>
     </LinearLayout>
 
 
