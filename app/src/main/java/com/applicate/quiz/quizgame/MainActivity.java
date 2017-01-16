@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         pDLogin = new ProgressDialog(this);
 
         firebaseLogin = FirebaseAuth.getInstance();
-        
+
         loginListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -95,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
+                startActivity(intent);
+                //Si queremos que se logee directamente al venir del register
+                //startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
 
