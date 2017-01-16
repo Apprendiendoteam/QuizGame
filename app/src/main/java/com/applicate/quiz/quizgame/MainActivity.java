@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!task.isSuccessful()) {
                     pDLogin.cancel();
-                    Log.w(TAG, "signInWithEmail:failed", task.getException());
+                    Log.d(TAG, "signInWithEmail:failed", task.getException());
                     onLoginFailed();
                     //Toast.makeText(MainActivity.this, "Usuario o Password incorrecto", Toast.LENGTH_SHORT).show();
                     //TODO: Intentar hacerlo con SnackBar
@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         /*
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
