@@ -77,11 +77,13 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     //user is signed in - el usuario esta logeado
                     Log.d(TAG, "Usuario registrado " + user.getUid());
-                    //pDLogin.dismiss();
+                    Log.d(TAG, "Usuario " + user.getEmail());
+                    Intent intent = new Intent(MainActivity.this, LateralActivity.class);
+                    startActivity(intent);
+
                 } else {
                     //User is signed out - el usuario no esta logeado
                     Log.d(TAG, "Usuario no registrado");
-                    //pDLogin.dismiss();
                 }
             }
         };
