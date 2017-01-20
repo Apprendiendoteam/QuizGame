@@ -138,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
                     onLoginFailed();
                     passwordRequest();
 
-                    //Toast.makeText(MainActivity.this, "Usuario o Password incorrecto", Toast.LENGTH_SHORT).show();
-
                     //TODO: Intentar hacerlo con SnackBar
                 }else{
                     onLoginSuccess();
@@ -157,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 
-    //Method to reset the password sending and email
+    //Method to reset the password sending an email
     //Método para resetear el password enviando un correo
     public void passwordRequest(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -223,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         setResult(RESULT_OK, null);
         Toast.makeText(MainActivity.this, "Login correct", Toast.LENGTH_SHORT).show();
         pDLogin.dismiss();
-        //finish();
+
     }
 
     public void onLoginFailed(){

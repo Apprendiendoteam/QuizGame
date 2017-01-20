@@ -1,5 +1,10 @@
 package com.applicate.quiz.quizgame;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -29,8 +34,21 @@ public class LateralActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        //para numerar los niveles (FAB)
+        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        FloatingActionButton fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+        FloatingActionButton fab4 = (FloatingActionButton) findViewById(R.id.fab4);
+
+        fab1.setImageBitmap(textAsBitMap("1"));
+        fab2.setImageBitmap(textAsBitMap("2"));
+        fab3.setImageBitmap(textAsBitMap("3"));
+        fab4.setImageBitmap(textAsBitMap("4"));
+
+
+
+        fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -55,10 +73,8 @@ public class LateralActivity extends AppCompatActivity
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userMail = user.getEmail();
-
-        Log.d(TAG, "Usuario " + userMail);
-
         tvUserMail.setText(userMail);
+        Log.d(TAG, "Usuario " + userMail);
 
     }
 
@@ -100,12 +116,16 @@ public class LateralActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_perfil) {
+            //se abriría el perfil del usuario
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_ranking) {
+            //abrir el ranking
 
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_logout) {
+            //User log out and go back to the loginView (MainActivity)
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(getBaseContext(),MainActivity.class));
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -117,5 +137,20 @@ public class LateralActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public static Bitmap textAsBitMap(String text){
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setTextSize(25);
+        paint.setColor(Color.WHITE);
+        paint.setTextAlign(Paint.Align.LEFT);
+        float baseline = -paint.ascent();
+        int width = (int) (paint.measureText(text) + 0.0f);
+        int height = (int) (baseline + paint.descent() + 0.0f);
+        Bitmap image = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(image);
+        canvas.drawText(text,0,baseline,paint);
+        return image;
     }
 }

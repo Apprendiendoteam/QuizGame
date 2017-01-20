@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,7 +26,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Bind(R.id.etPassword) EditText etPassword;
     @Bind(R.id.etPasscheck) EditText etPassCheck;
     @Bind(R.id.btRegister) Button btRegister;
-    @Bind(R.id.btCancel) Button btCancel;
+    @Bind(R.id.tvAlreadyRegister)
+    TextView tvAlreadyRegister;
 
     /*
     private EditText etMail;
@@ -63,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         //listener del Cancel Button para volver a la vista de Login
-        btCancel.setOnClickListener(new View.OnClickListener() {
+        tvAlreadyRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
