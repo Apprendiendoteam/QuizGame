@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    android:background="@color/colorTextBlue"
+    android:background="@drawable/side_nav_bar"
     tools:context="com.applicate.quiz.quizgame.MainActivity">
 
     <EditText
@@ -43,17 +44,18 @@
         android:layout_height="wrap_content"
         android:text="Log In"
         android:textSize="20dp"
+        android:layout_margin="10px"
         android:textColor="@color/colorTextWhite"
-        android:background="@color/colorTextOrange"
-        android:id="@+id/btLogin"/>
+        android:background="@drawable/ic_mybutton"
+        android:id="@+id/btLogin"
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Regístrate ahora"
+        android:text="New here? Create an account"
         android:textColor="@color/colorTextWhite"
-        android:textSize="15dp"
-        android:textAlignment="viewEnd"
+        android:textSize="20dp"
         android:layout_margin="10px"
         android:id="@+id/tvRegister"/>
 
