@@ -18,6 +18,18 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorTextGrey"
         android:textSize="20dp"
+        android:hint="User Name"
+        android:textColorHint="@color/colorTextGrey"
+        android:background="@color/colorTextWhite"
+        android:layout_margin="10px"
+        android:padding="15px"
+        android:id="@+id/etUserName"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextGrey"
+        android:textSize="20dp"
         android:hint="username@mail.com"
         android:textColorHint="@color/colorTextGrey"
         android:background="@color/colorTextWhite"

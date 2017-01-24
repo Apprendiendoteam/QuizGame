@@ -16,12 +16,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.model.FBConnect;
+import com.model.Usuario;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    @Bind(R.id.etUserName) EditText etUserName;
     @Bind(R.id.etMail) EditText etMail;
     @Bind(R.id.etPassword) EditText etPassword;
     @Bind(R.id.etPasscheck) EditText etPassCheck;
@@ -96,10 +99,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         btRegister.setEnabled(false);
 
-        String mail = etMail.getText().toString().trim();
+        final String userName = etUserName.getText().toString().trim();
+        final String mail = etMail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-
-
 
         progressDialog.setMessage("Registering User...");
         progressDialog.show();
@@ -109,8 +111,16 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     //user is successfully registered and logged in
+                    //saving the userName in the userDDBB
+                    Usuario usuario = new Usuario(userName,mail);
+                    FBConnect fbConnect = new FBConnect();
+                    fbConnect.addNewUser(usuario);
                     progressDialog.cancel();
                     onRegisterSuccess();
+                    finish();
+                    //TODO: al poner este finish se va directo a la view del juego
+                    //TODO: Pero no reconoce el correo en el menu lateral
+                    //TODO: xq el listener del Auth no tiene nada xq se "rellena" en el MainView
                     //Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                 }else{
                     progressDialog.cancel();
