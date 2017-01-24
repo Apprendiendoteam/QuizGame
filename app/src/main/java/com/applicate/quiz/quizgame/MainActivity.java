@@ -58,13 +58,6 @@ public class MainActivity extends AppCompatActivity {
         //Para insertar las vistas con el ButterKnife
         ButterKnife.bind(this);
 
-        /*
-        btLogin = (Button) findViewById(R.id.btLogin);
-        etMail = (EditText) findViewById(R.id.etMail);
-        etPassword = (EditText) findViewById(R.id.etPassword);
-        tvRegister = (TextView) findViewById(R.id.tvRegister);
-        */
-
         pDLogin = new ProgressDialog(this);
 
         firebaseLogin = FirebaseAuth.getInstance();
@@ -82,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 } else {
-                    //User is signed out - el usuario no esta logeado
+                    //user is signed out - el usuario no esta logeado
                     Log.d(TAG, "Usuario no registrado");
                 }
             }
@@ -128,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseLogin.signInWithEmailAndPassword(mail, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.d(TAG, "signInWithEmail:onComplete" + task.isSuccessful());
+                Log.d(TAG, "signInWithEmail:onComplete " + task.isSuccessful());
                 //If sign in fails, display a message to the user.
                 //If sign in succeeds the auth state listener will be notified and
                 //logic to handle the signed in user can be handled in the listener
@@ -165,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.d(TAG, "User press CANCEL button");
                         dialogInterface.cancel();
                     }
                 })
@@ -179,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(getBaseContext(), "Check your mail to reset your password",Toast.LENGTH_SHORT).show();
                                     Log.d(TAG, "Email sent to " + mail);
                                 }else{
-                                    Log.d(TAG, "Email did not send");
+                                    Log.d(TAG, "Error sending the email");
                                 }
                             }
                         });

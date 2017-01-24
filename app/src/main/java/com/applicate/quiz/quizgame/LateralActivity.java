@@ -17,7 +17,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +25,6 @@ import android.widget.TextView;
 import com.applicate.quiz.quizgame.fragments.GameFragment;
 import com.applicate.quiz.quizgame.fragments.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class LateralActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,12 +78,12 @@ public class LateralActivity extends AppCompatActivity
 
         View navHeaderView = navigationView.getHeaderView(0);
         TextView tvUserMail = (TextView) navHeaderView.findViewById(R.id.tvUserMail);
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userMail = user.getEmail();
+/*
+        FirebaseUser userFB = FirebaseAuth.getInstance().getCurrentUser();
+        String userMail = userFB.getEmail();
         tvUserMail.setText(userMail);
         Log.d(TAG, "Usuario " + userMail);
-
+*/
     }
 
     @Override
@@ -137,7 +135,7 @@ public class LateralActivity extends AppCompatActivity
             //abrir el ranking
 
         } else if (id == R.id.nav_logout) {
-            //User log out and go back to the loginView (MainActivity)
+            //user log out and go back to the loginView (MainActivity)
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(getBaseContext(),MainActivity.class));
         } else if (id == R.id.nav_manage) {
@@ -153,6 +151,7 @@ public class LateralActivity extends AppCompatActivity
         return true;
     }
 
+    //este método es para añadir texto como bitmap a los botones flotantes
     public static Bitmap textAsBitMap(String text){
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setTextSize(25);
