@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.applicate.quiz.quizgame.fragments.GameFragment;
+import com.applicate.quiz.quizgame.fragments.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -34,9 +39,14 @@ public class LateralActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Cambiamos el fragmento lateral y establecemos nuestro fragmento
+        //Juego.
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment gameFragment = new GameFragment();
+        fm.beginTransaction().replace(R.id.content_lateral,gameFragment).commit();
 
         //para numerar los niveles (FAB)
-        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+       /* FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
         FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         FloatingActionButton fab3 = (FloatingActionButton) findViewById(R.id.fab3);
         FloatingActionButton fab4 = (FloatingActionButton) findViewById(R.id.fab4);
@@ -55,7 +65,7 @@ public class LateralActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
-
+*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -118,7 +128,11 @@ public class LateralActivity extends AppCompatActivity
 
         if (id == R.id.nav_perfil) {
             //se abriría el perfil del usuario
-            // Handle the camera action
+            Fragment perfil = new PerfilFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.content_lateral, perfil).commit();
+
+
         } else if (id == R.id.nav_ranking) {
             //abrir el ranking
 
