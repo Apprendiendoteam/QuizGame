@@ -34,13 +34,16 @@ public class FBConnect {
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.d("PROBANDO con child", dataSnapshot.getKey());
+                //Log.d("PROBANDO con child", dataSnapshot.getKey());
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String userMail = user.getEmail();
                 if (usuario.getUserMail().equals(userMail)){
+                    Log.d("PROBANDO con child", dataSnapshot.getKey());
                     Log.d("USUARIO", usuario.getUserMail());
+
                     //TODO: Poner lo que se quiera q haga la función
+                    //hasta ahora solo se comprueba que se leen los usuarios
                 }else{
                     Log.d("Usuario", "no entro");
                 }
@@ -76,7 +79,13 @@ public class FBConnect {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (usuario.getUserMail().equals(user.getEmail())){
                     Log.d("FBConnect", "User equals in updatePoints");
-
+                    String key = userRef.child(QGReference.USER_REFERENCE).push().getKey();
+                    Log.d("FBConnet",key);
+                    /*
+                    HashMap<String, Object> updateValue = usuario.toMap();
+                    HashMap<String, Object> childUpdates = new HashMap<>();
+                    childUpdates.put("")
+                    */
                     //userRef.child(dataSnapshot.getKey()).updateChildren(points);
                 }else{
                     Log.d("FBConnet","No entro en updatePoints");
