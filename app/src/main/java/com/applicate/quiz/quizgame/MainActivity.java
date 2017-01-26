@@ -215,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
         setResult(RESULT_OK, null);
         Toast.makeText(MainActivity.this, "Login correct", Toast.LENGTH_SHORT).show();
         pDLogin.dismiss();
-
     }
 
     public void onLoginFailed(){

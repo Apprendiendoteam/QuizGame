@@ -6,9 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +24,7 @@ import android.widget.TextView;
 import com.applicate.quiz.quizgame.fragments.GameFragment;
 import com.applicate.quiz.quizgame.fragments.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.model.FBConnect;
 
 public class LateralActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +42,16 @@ public class LateralActivity extends AppCompatActivity
         FragmentManager fm = getSupportFragmentManager();
         Fragment gameFragment = new GameFragment();
         fm.beginTransaction().replace(R.id.content_lateral,gameFragment).commit();
+
+
+        Log.d("PROBANDO USUARIO REG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        FBConnect fbc = new FBConnect();
+
+        fbc.getUser();
+        fbc.updatePoints(1200);
+
+        //fbc.editarUser();
+
 
         //para numerar los niveles (FAB)
        /* FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
@@ -78,12 +88,15 @@ public class LateralActivity extends AppCompatActivity
 
         View navHeaderView = navigationView.getHeaderView(0);
         TextView tvUserMail = (TextView) navHeaderView.findViewById(R.id.tvUserMail);
-/*
+
+        /*
+        //Esto es para poner el usuario/mail en navigation del menu lateral
+
         FirebaseUser userFB = FirebaseAuth.getInstance().getCurrentUser();
         String userMail = userFB.getEmail();
         tvUserMail.setText(userMail);
         Log.d(TAG, "Usuario " + userMail);
-*/
+        */
     }
 
     @Override

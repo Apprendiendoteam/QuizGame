@@ -52,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
         //Para la inyección de las vistas con ButterKnife
         ButterKnife.bind(this);
 
@@ -125,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }else{
                     progressDialog.cancel();
                     onRegisterFailed();
-                    // Toast.makeText(RegisterActivity.this, "Could not register, try again", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RegisterActivity.this, "Could not register, try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
