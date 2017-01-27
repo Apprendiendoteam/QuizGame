@@ -72,15 +72,4 @@ public class Usuario {
         this.level = level;
     }
 
-    //@Exclude
-    public HashMap<String, Object> toMap(){
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("level",level);
-        result.put("points",points);
-        result.put("userMail",userMail);
-        result.put("userName",userName);
-
-        return result;
-    }
-
 }
