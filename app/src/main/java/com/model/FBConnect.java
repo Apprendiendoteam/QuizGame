@@ -10,8 +10,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-
 /**
  * Created by sunsun on 24/1/17.
  */
@@ -22,6 +20,8 @@ public class FBConnect {
     FirebaseDatabase fbdb = FirebaseDatabase.getInstance();
     DatabaseReference userRef = fbdb.getReference(QGReference.USER_REFERENCE);
 
+    private final static String TAG = "FBConnect";
+
     public FBConnect(){
     }
 
@@ -31,7 +31,22 @@ public class FBConnect {
 
 }
 
+    //Método para obtener el usuario que esta jugando en ese momento
+
     public void getUser(){
+
+        //He intentado hacer este metodo como public Usuario getUSer(){}
+        //para que devolviera un usuario, xo es imposible hacer que el usuario que devuelve
+        //no me pida q lo convierta en array
+        //o bien si intento crear un usuarioADevolver y luego lo iguale cogiendo
+        //los valores del usuario en el if del dataSanpshot no me diga luego
+        //que el usuario a devolver es Null
+        //así q no se como narices hacer para devolver el usuario q esta registrado en ese momento
+        //xq para hacer el método updatePoint o actulizar cualq campo del usuario
+        //x lo q entiendo de firebase tienes que pasarle todos los datos para q los sobreescriba
+        //y si poniamos el childEventListener en el updatePoints
+        //entraba en un bucle sin fin y además no actualizaba datos
+        //lo que hacía era incluir cada vez un nuevo usuario dentro de una rama nueva de /users/
 
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
@@ -40,18 +55,18 @@ public class FBConnect {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String userMail = user.getEmail();
-                /*
+
                 if (usuario != null){
                     if (usuario.getUserMail().equals(userMail)){
-                        Log.d("USUARIO", usuario.getUserMail());
+                        Log.d(TAG, "USUARIO:" + usuario.getUserMail());
                         //TODO: Poner lo que se quiera q haga la función
                     }else{
-                        Log.d("Usuario", "no entro");
+                        Log.d(TAG, "No hay ningún usuario con ese mail");
                     }
                 } else {
-                    Log.d("USUARIO", "USUARIO NO ENCONTRADO");
+                    Log.d(TAG, "USUARIO NO ENCONTRADO");
                 }
-                */
+
 
             }
 
@@ -76,25 +91,38 @@ public class FBConnect {
             }
         };
         userRef.addChildEventListener(childEventListener);
+
     }
+
     public void updatePoints(final int points){
+
+        String key = userRef.child(QGReference.USER_REFERENCE).push().getKey();
+
+
+        /*
+        //He comentado esto para intentar hacerlo sin el childEventListener
+        //pero hace falta el usuario
+        //x lo q no se como hacerlo :(
+        //xq estaba pensando q si tal vez tienes la key del usuario
+        //en lugar de acceder la rama padre, se puede ir directamente al usuario
+        //y con la rama points actualizarla pero.. sq el updateChild
+        //te pide un HashMap
+
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Usuario usuario = dataSnapshot.getValue(Usuario.class);
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (usuario != null){
-                    if (usuario.getUserMail().equals(user.getEmail())){
+                if (usuario != null) {
+                    if (usuario.getUserMail().equals(user.getEmail())) {
 
-                        Log.d("FBConnect", "User equals in updatePoints");
+                        Log.d(TAG, "User equals in updatePoints");
 
                         String key = userRef.child(QGReference.USER_REFERENCE).push().getKey();
 
-                        Log.d("FBConnect","KEY: " + key);
-
+                        Log.d(TAG, "KEY: " + key);
 
                         usuario.points = 8;
-
 
                         HashMap<String, Object> updateValue = usuario.toMap();
 
@@ -103,23 +131,22 @@ public class FBConnect {
                         childUpdates.put("/users/" + key, updateValue);
 
 
-                        Log.d("A MANDAR A UPDATEAR:", "HashMap: "+ childUpdates);
+                        Log.d("A MANDAR A UPDATEAR:", "HashMap: " + childUpdates);
 
                         userRef.updateChildren(childUpdates);
                         //userRef.child(dataSnapshot.getKey()).updateChildren(points);
 
-                    }else{
+                    } else {
 
-                        Log.d("FBConnect","Los usuarios no coinciden");
+                        Log.d(TAG, "Los usuarios no coinciden");
 
                     }
                 } else {
-                    Log.d("FBConnect", "USUARIO NO ENCONTRADO");
+                    Log.d(TAG, "USUARIO NO ENCONTRADO");
 
                 }
 
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
@@ -141,6 +168,8 @@ public class FBConnect {
             }
         };
         userRef.addChildEventListener(childEventListener);
+        */
+
 
     }
 

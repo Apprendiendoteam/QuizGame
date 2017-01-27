@@ -25,6 +25,13 @@ public class Usuario {
         this.userMail = userMail;
     }
 
+    public Usuario(String userName, String userMail, int points, int level) {
+        this.userName = userName;
+        this.userMail = userMail;
+        this.points = points;
+        this.level = level;
+    }
+
     public HashMap<String, Object> toMap() {
 
         HashMap<String, Object> result = new HashMap<>();
@@ -72,4 +79,11 @@ public class Usuario {
         this.level = level;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario: Nombre: " + this.getUserName() +
+                " Mail: " + this.getUserMail() +
+                " Level: " + this.getLevel() +
+                " Points: "+ this.getPoints();
+    }
 }
