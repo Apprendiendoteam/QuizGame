@@ -10,6 +10,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 /**
  * Created by sunsun on 24/1/17.
  */
@@ -20,7 +22,9 @@ public class FBConnect {
     FirebaseDatabase fbdb = FirebaseDatabase.getInstance();
     DatabaseReference userRef = fbdb.getReference(QGReference.USER_REFERENCE);
 
-    private final static String TAG = "FBConnect";
+    ArrayList<Usuario> arrayUser = new ArrayList<Usuario>();
+
+    private final static String TAG = "FBCONNECT";
 
     public FBConnect(){
     }
@@ -28,6 +32,9 @@ public class FBConnect {
     public void editUser(String userID, String newUserName){
 
     userRef.child(userID).setValue(newUserName);
+        //TODO: No se si funciona bien
+        //TODO: Hay que probarlo
+        //TODO: Xq requiere tener la key del usuario
 
 }
 
@@ -35,6 +42,7 @@ public class FBConnect {
 
     public void getUser(){
 
+        final String keyUserReg;
         //He intentado hacer este metodo como public Usuario getUSer(){}
         //para que devolviera un usuario, xo es imposible hacer que el usuario que devuelve
         //no me pida q lo convierta en array
@@ -56,9 +64,17 @@ public class FBConnect {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String userMail = user.getEmail();
 
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot snapshotUser: dataSnapshot.getChildren()){
+                        Log.d(TAG, "ARRAYUSER: " + snapshotUser.getKey() +": " + snapshotUser.getValue());
+                    }
+                }
+
+                /*
                 if (usuario != null){
                     if (usuario.getUserMail().equals(userMail)){
                         Log.d(TAG, "USUARIO:" + usuario.getUserMail());
+
                         //TODO: Poner lo que se quiera q haga la función
                     }else{
                         Log.d(TAG, "No hay ningún usuario con ese mail");
@@ -66,7 +82,7 @@ public class FBConnect {
                 } else {
                     Log.d(TAG, "USUARIO NO ENCONTRADO");
                 }
-
+                */
 
             }
 
@@ -97,6 +113,7 @@ public class FBConnect {
     public void updatePoints(final int points){
 
         String key = userRef.child(QGReference.USER_REFERENCE).push().getKey();
+
 
 
         /*

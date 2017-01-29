@@ -10,8 +10,8 @@ public class Usuario {
 
     public String userName;
     public String userMail;
-    public int points;
-    public int level;
+    public double points;
+    public double level;
 
     public Usuario(){
     }
@@ -24,8 +24,15 @@ public class Usuario {
         this.userName = userName;
         this.userMail = userMail;
     }
-
+/*
     public Usuario(String userName, String userMail, int points, int level) {
+        this.userName = userName;
+        this.userMail = userMail;
+        this.points = points;
+        this.level = level;
+    }
+*/
+    public Usuario(double level, double points, String userMail, String userName) {
         this.userName = userName;
         this.userMail = userMail;
         this.points = points;
@@ -63,7 +70,7 @@ public class Usuario {
         this.userMail = userMail;
     }
 
-    public int getPoints() {
+    public double getPoints() {
         return points;
     }
 
@@ -71,7 +78,7 @@ public class Usuario {
         this.points = points;
     }
 
-    public int getLevel() {
+    public double getLevel() {
         return level;
     }
 

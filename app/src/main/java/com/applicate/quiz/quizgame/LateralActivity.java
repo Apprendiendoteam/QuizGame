@@ -29,7 +29,7 @@ import com.model.FBConnect;
 public class LateralActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final static String TAG = "LateralActivity";
+    private final static String TAG = "LATERAL_ACTIVITY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,8 @@ public class LateralActivity extends AppCompatActivity
         FBConnect fbc = new FBConnect();
 
         fbc.getUser();
-        fbc.updatePoints(1200);
+
+        //fbc.updatePoints(1200);
 
         //fbc.editarUser();
 
