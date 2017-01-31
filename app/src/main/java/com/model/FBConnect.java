@@ -22,8 +22,6 @@ public class FBConnect {
     FirebaseDatabase fbdb = FirebaseDatabase.getInstance();
     DatabaseReference userRef = fbdb.getReference(QGReference.USER_REFERENCE);
 
-    ArrayList<Usuario> arrayUser = new ArrayList<Usuario>();
-
     private final static String TAG = "FBCONNECT";
 
     public FBConnect(){
@@ -40,9 +38,8 @@ public class FBConnect {
 
     //Método para obtener el usuario que esta jugando en ese momento
 
-    public void getUser(){
+    public ArrayList getUser(){
 
-        final String keyUserReg;
         //He intentado hacer este metodo como public Usuario getUSer(){}
         //para que devolviera un usuario, xo es imposible hacer que el usuario que devuelve
         //no me pida q lo convierta en array
@@ -56,34 +53,27 @@ public class FBConnect {
         //entraba en un bucle sin fin y además no actualizaba datos
         //lo que hacía era incluir cada vez un nuevo usuario dentro de una rama nueva de /users/
 
+
+        final ArrayList<Usuario> userArray = new ArrayList();
+
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //Log.d("PROBANDO con child", dataSnapshot.getKey());
-                Usuario usuario = dataSnapshot.getValue(Usuario.class);
+
+                Log.d(TAG, "HA ENTRADO EN EL ONCHILDADDED");
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String userMail = user.getEmail();
-
-                if (dataSnapshot.exists()){
-                    for (DataSnapshot snapshotUser: dataSnapshot.getChildren()){
-                        Log.d(TAG, "ARRAYUSER: " + snapshotUser.getKey() +": " + snapshotUser.getValue());
-                    }
+                if (dataSnapshot.getValue(Usuario.class).getUserMail().equals(userMail)){
+                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                    Log.d("USUARIOOOOOO", usuario.getUserMail());
+                    userArray.add(usuario);
+                }else{
+                    Log.d("PROBANDO DE NUEVO","No ENTRO EN EL If");
                 }
+                //Esto funciona hasta escribir el usuario, pero luego no hay forma
+                //de sacar el usuario del bucle if sin un array
 
-                /*
-                if (usuario != null){
-                    if (usuario.getUserMail().equals(userMail)){
-                        Log.d(TAG, "USUARIO:" + usuario.getUserMail());
-
-                        //TODO: Poner lo que se quiera q haga la función
-                    }else{
-                        Log.d(TAG, "No hay ningún usuario con ese mail");
-                    }
-                } else {
-                    Log.d(TAG, "USUARIO NO ENCONTRADO");
-                }
-                */
-
+                Log.d(TAG,userArray.toString());
             }
 
             @Override
@@ -107,14 +97,17 @@ public class FBConnect {
             }
         };
         userRef.addChildEventListener(childEventListener);
-
+        Log.d(TAG, "SIZE:" + userArray.size());
+        //En consola devuelve antes esta sentencia que la del log.con el array.toString()
+        return userArray;
     }
+
+
+
 
     public void updatePoints(final int points){
 
         String key = userRef.child(QGReference.USER_REFERENCE).push().getKey();
-
-
 
         /*
         //He comentado esto para intentar hacerlo sin el childEventListener
@@ -192,6 +185,7 @@ public class FBConnect {
 
 
     //Método para añadir un nuevo Usuario Json en la BBDD
+    //Este método se llama en el registro (RegisterView)
     public void addNewUser(Usuario usuario){
         FirebaseDatabase FBDatabase = FirebaseDatabase.getInstance();
         DatabaseReference userRef = FBDatabase.getReference(QGReference.USER_REFERENCE);

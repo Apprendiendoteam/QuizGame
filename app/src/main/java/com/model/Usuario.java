@@ -1,12 +1,13 @@
 package com.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by sunsun on 24/1/17.
  */
 
-public class Usuario {
+public class Usuario implements Serializable{
 
     public String userName;
     public String userMail;

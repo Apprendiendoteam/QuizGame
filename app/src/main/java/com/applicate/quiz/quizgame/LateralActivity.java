@@ -25,6 +25,9 @@ import com.applicate.quiz.quizgame.fragments.GameFragment;
 import com.applicate.quiz.quizgame.fragments.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.model.FBConnect;
+import com.model.Usuario;
+
+import java.util.ArrayList;
 
 public class LateralActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,7 +50,9 @@ public class LateralActivity extends AppCompatActivity
         Log.d("PROBANDO USUARIO REG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
         FBConnect fbc = new FBConnect();
 
-        fbc.getUser();
+        ArrayList<Usuario> arrayUser = fbc.getUser();
+        //Usuario user = arrayUser.get(0);
+        //Log.d(TAG, user.toString());
 
         //fbc.updatePoints(1200);
 
