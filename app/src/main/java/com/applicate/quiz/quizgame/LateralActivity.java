@@ -20,19 +20,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.applicate.quiz.quizgame.fragments.GameFragment;
 import com.applicate.quiz.quizgame.fragments.PerfilFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.model.FBConnect;
+import com.model.QGReference;
 import com.model.Usuario;
-
-import java.util.ArrayList;
 
 public class LateralActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final static String TAG = "LATERAL_ACTIVITY";
+    TextView tvUserMail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +57,6 @@ public class LateralActivity extends AppCompatActivity
         Log.d("PROBANDO USUARIO REG", FirebaseAuth.getInstance().getCurrentUser().getEmail());
         FBConnect fbc = new FBConnect();
 
-        ArrayList<Usuario> arrayUser = fbc.getUser();
-        //Usuario user = arrayUser.get(0);
-        //Log.d(TAG, user.toString());
-
-        //fbc.updatePoints(1200);
-
-        //fbc.editarUser();
 
 
         //para numerar los niveles (FAB)
@@ -93,7 +93,7 @@ public class LateralActivity extends AppCompatActivity
         //y poder poner el nombre/mail del usuario
 
         View navHeaderView = navigationView.getHeaderView(0);
-        TextView tvUserMail = (TextView) navHeaderView.findViewById(R.id.tvUserMail);
+        tvUserMail = (TextView) navHeaderView.findViewById(R.id.tvUserMail);
 
         /*
         //Esto es para poner el usuario/mail en navigation del menu lateral
@@ -104,6 +104,7 @@ public class LateralActivity extends AppCompatActivity
         Log.d(TAG, "Usuario " + userMail);
         */
     }
+
 
     @Override
     public void onBackPressed() {
@@ -151,6 +152,29 @@ public class LateralActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_ranking) {
+
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(QGReference.USER_REFERENCE);
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        for (DataSnapshot userSnap : dataSnapshot.getChildren()){
+                            Usuario user = userSnap.getValue(Usuario.class);
+                            FirebaseUser userLog = FirebaseAuth.getInstance().getCurrentUser();
+
+                            if (user.getUserMail().equals(userLog.getEmail())){
+                                Toast.makeText(getBaseContext(),"Mail:"+user.getUserMail(),Toast.LENGTH_SHORT).show();
+                                tvUserMail.setText(user.getUserMail());
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             //abrir el ranking
 
         } else if (id == R.id.nav_logout) {
@@ -186,3 +210,4 @@ public class LateralActivity extends AppCompatActivity
         return image;
     }
 }
+

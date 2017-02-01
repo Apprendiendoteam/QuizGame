@@ -2,15 +2,14 @@ package com.model;
 
 import android.util.Log;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sunsun on 24/1/17.
@@ -38,7 +37,7 @@ public class FBConnect {
 
     //Método para obtener el usuario que esta jugando en ese momento
 
-    public ArrayList getUser(){
+    public List<Usuario> getUser(){
 
         //He intentado hacer este metodo como public Usuario getUSer(){}
         //para que devolviera un usuario, xo es imposible hacer que el usuario que devuelve
@@ -54,8 +53,33 @@ public class FBConnect {
         //lo que hacía era incluir cada vez un nuevo usuario dentro de una rama nueva de /users/
 
 
-        final ArrayList<Usuario> userArray = new ArrayList();
+        final List<Usuario> usuariosList;
+        usuariosList = new ArrayList<>();
 
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot userSnapshot: dataSnapshot.getChildren()){
+                        Usuario usuario = userSnapshot.getValue(Usuario.class);
+                        usuariosList.add(usuario);
+                    }
+                    Log.d(TAG,usuariosList.toString());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+        Log.d(TAG, "SIZE: "+usuariosList.size());
+        Log.d(TAG,usuariosList.toString());
+
+        return usuariosList;
+        /*
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -63,17 +87,27 @@ public class FBConnect {
                 Log.d(TAG, "HA ENTRADO EN EL ONCHILDADDED");
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String userMail = user.getEmail();
-                if (dataSnapshot.getValue(Usuario.class).getUserMail().equals(userMail)){
-                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
-                    Log.d("USUARIOOOOOO", usuario.getUserMail());
-                    userArray.add(usuario);
-                }else{
-                    Log.d("PROBANDO DE NUEVO","No ENTRO EN EL If");
-                }
-                //Esto funciona hasta escribir el usuario, pero luego no hay forma
-                //de sacar el usuario del bucle if sin un array
 
-                Log.d(TAG,userArray.toString());
+                if(dataSnapshot.exists()) {
+                    if (dataSnapshot.getValue(Usuario.class).getUserMail().equals(userMail)) {
+                        for (DataSnapshot userSnapshot: dataSnapshot.getChildren()){
+                            Usuario usuario = dataSnapshot.getValue(Usuario.class);
+
+                            userArray.add(usuario);
+                        }
+
+                        //Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                        //Log.d("USUARIOOOOOO", usuario.getUserMail());
+                        //userArray.add(usuario);
+                    } else {
+                        Log.d("PROBANDO DE NUEVO", "No ENTRO EN EL If");
+                    }
+                    //Esto funciona hasta escribir el usuario, pero luego no hay forma
+                    //de sacar el usuario del bucle if sin un array
+
+
+                    Log.d(TAG, userArray.toString());
+                }
             }
 
             @Override
